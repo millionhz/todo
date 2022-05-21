@@ -47,7 +47,7 @@ function removeTodoFromButton(element) {
 
 function rebuildTodoList() {
   let todoList = getTodoList();
-  let = html = "";
+  let html = "";
 
   for (let i = 0; i < todoList.length; i++) {
     html += `
