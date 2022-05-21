@@ -1,6 +1,11 @@
-# Todo50
+# Just Todo It
 
-A todo list made with:
+A simple todo list made with:
 
-- flask
 - bootstrap
+- raw js
+- `localStorage` API
+
+---
+
+[GitHub Pages Link](https://millionhz.github.io/todo/)
