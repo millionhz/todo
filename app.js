@@ -1,31 +1,53 @@
-let todoList = [];
+function getTodoList() {
+  todoList = localStorage.getItem("todoList");
 
-let appendTodoFromInput = () => {
+  if (todoList) {
+    return todoList.split(",");
+  }
+  return [];
+}
+
+function setTodoList(list) {
+  localStorage.setItem("todoList", list);
+}
+
+function appendTodoFromInput() {
   let element = document.querySelector("#new-todo");
 
-  let todo = element.value;
+  let todoItems = element.value;
 
-  if (!todo) {
+  if (!todoItems) {
     return;
   }
 
-  todoList.push(todo);
+  let todoList = getTodoList();
+
+  todoItems.split(",").forEach((element) => {
+    if (element) {
+      todoList.push(element);
+    }
+  });
+
+  setTodoList(todoList);
 
   rebuildTodoList();
 
   element.value = "";
-};
+}
 
-let removeTodoFromButton = (element) => {
+function removeTodoFromButton(element) {
   let idxToRemove = element.target.parentElement.dataset.idx;
+  let todoList = getTodoList();
 
   todoList.splice(idxToRemove, 1);
+  setTodoList(todoList);
 
   rebuildTodoList();
-};
+}
 
-rebuildTodoList = () => {
-  html = "";
+function rebuildTodoList() {
+  let todoList = getTodoList();
+  let = html = "";
 
   for (let i = 0; i < todoList.length; i++) {
     html += `
@@ -39,6 +61,10 @@ rebuildTodoList = () => {
   }
 
   document.querySelector("ul").innerHTML = html;
+}
+
+window.onload = () => {
+  rebuildTodoList();
 };
 
 document
