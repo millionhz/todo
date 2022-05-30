@@ -53,18 +53,9 @@ function removeTodoList(idxToRemove) {
   rebuildTodoList();
 }
 
-function _getItemsFromInputField() {
-  const todoItems = inputField.value;
-
-  return todoItems.split(",").filter((element) => Boolean(element));
-}
-
 function _manageTodoInputEvent() {
-  const todoItems = _getItemsFromInputField();
-
-  for (const todoItem of todoItems) {
-    appendTodoList(todoItem);
-  }
+  const todoItem = inputField.value;
+  appendTodoList(todoItem);
 
   inputField.value = "";
 }
