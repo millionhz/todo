@@ -1,48 +1,18 @@
-function getTodoList() {
-  todoList = localStorage.getItem("todoList");
+const addButton = document.querySelector("#add-todo-button");
+const inputField = document.querySelector("#new-todo");
+const todoList = document.querySelector("ul");
 
-  if (todoList) {
-    return todoList.split(",");
+function getTodoList() {
+  let todoItems = localStorage.getItem("todoList");
+
+  if (todoItems) {
+    return todoItems.split(",");
   }
   return [];
 }
 
-function setTodoList(list) {
-  localStorage.setItem("todoList", list);
-}
-
-function appendTodoFromInput() {
-  let element = document.querySelector("#new-todo");
-
-  let todoItems = element.value;
-
-  if (!todoItems) {
-    return;
-  }
-
-  let todoList = getTodoList();
-
-  todoItems.split(",").forEach((element) => {
-    if (element) {
-      todoList.push(element);
-    }
-  });
-
-  setTodoList(todoList);
-
-  rebuildTodoList();
-
-  element.value = "";
-}
-
-function removeTodoFromButton(element) {
-  let idxToRemove = element.target.parentElement.dataset.idx;
-  let todoList = getTodoList();
-
-  todoList.splice(idxToRemove, 1);
-  setTodoList(todoList);
-
-  rebuildTodoList();
+function setTodoList(todoItems) {
+  localStorage.setItem("todoList", todoItems);
 }
 
 function rebuildTodoList() {
@@ -63,24 +33,55 @@ function rebuildTodoList() {
   document.querySelector("ul").innerHTML = html;
 }
 
-window.onload = () => {
+function appendTodoList(todoItem) {
+  const todoList = getTodoList();
+
+  if (todoItem) {
+    todoList.push(todoItem);
+  }
+
+  setTodoList(todoList);
   rebuildTodoList();
-};
+}
 
-document
-  .querySelector("#add-todo-button")
-  .addEventListener("click", (element) => {
-    appendTodoFromInput();
-  });
+function removeTodoList(idxToRemove) {
+  let todoList = getTodoList();
 
-document.querySelector("#new-todo").addEventListener("keypress", (element) => {
-  if (element.key === "Enter") {
-    appendTodoFromInput();
+  todoList.splice(idxToRemove, 1);
+  setTodoList(todoList);
+
+  rebuildTodoList();
+}
+
+function _getItemsFromInputField() {
+  const todoItems = inputField.value;
+
+  return todoItems.split(",").filter((element) => Boolean(element));
+}
+
+function _manageTodoInputEvent() {
+  const todoItems = _getItemsFromInputField();
+
+  for (const todoItem of todoItems) {
+    appendTodoList(todoItem);
+  }
+
+  inputField.value = "";
+}
+
+window.onload = () => rebuildTodoList();
+window.onfocus = () => rebuildTodoList();
+
+addButton.addEventListener("click", () => _manageTodoInputEvent());
+
+inputField.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    _manageTodoInputEvent();
   }
 });
 
-document.querySelector("ul").addEventListener("click", (element) => {
-  if (element.target.nodeName === "BUTTON") {
-    removeTodoFromButton(element);
+todoList.addEventListener("click", (event) => {
+  if (event.target.nodeName === "BUTTON") {
+    removeTodoList(event.target.parentElement.dataset.idx);
   }
 });
