@@ -6,13 +6,13 @@ function getTodoList() {
   let todoItems = localStorage.getItem("todoList");
 
   if (todoItems) {
-    return todoItems.split(",");
+    return JSON.parse(todoItems);
   }
   return [];
 }
 
 function setTodoList(todoItems) {
-  localStorage.setItem("todoList", todoItems);
+  localStorage.setItem("todoList", JSON.stringify(todoItems));
 }
 
 function rebuildTodoList() {
