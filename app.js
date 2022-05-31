@@ -108,12 +108,30 @@ todoList.addEventListener("click", (event) => {
 todoList.addEventListener("dragstart", (event) => {
   if (event.target.nodeName === "UL") {
     event.dataTransfer.setData("text/plain", event.target.dataset.idx);
+    event.target.classList.add("list-group-item-primary");
+  }
+});
+
+todoList.addEventListener("dragend", (event) => {
+  if (event.target.nodeName === "UL") {
+    event.target.classList.remove("active");
+    event.target.classList.remove("list-group-item-primary");
   }
 });
 
 todoList.addEventListener("dragover", (event) => {
   event.preventDefault();
   event.dataTransfer.dropEffect = "move";
+
+  if (event.target.nodeName === "UL") {
+    event.target.classList.add("active");
+  }
+});
+
+todoList.addEventListener("dragleave", (event) => {
+  if (event.target.nodeName === "UL") {
+    event.target.classList.remove("active");
+  }
 });
 
 todoList.addEventListener("drop", (event) => {
