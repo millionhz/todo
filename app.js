@@ -48,21 +48,21 @@ function rebuildTodoList() {
 }
 
 function appendTodoList(todoItem) {
-  const todoList = getTodoList();
+  const todoListArr = getTodoList();
 
   if (todoItem) {
-    todoList.push(todoItem);
+    todoListArr.push(todoItem);
   }
 
-  setTodoList(todoList);
+  setTodoList(todoListArr);
   rebuildTodoList();
 }
 
 function removeTodoList(idxToRemove) {
-  let todoList = getTodoList();
+  let todoListArr = getTodoList();
 
-  todoList.splice(idxToRemove, 1);
-  setTodoList(todoList);
+  todoListArr.splice(idxToRemove, 1);
+  setTodoList(todoListArr);
 
   rebuildTodoList();
 }
