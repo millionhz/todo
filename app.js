@@ -48,15 +48,16 @@ function rebuildTodoList() {
   }
 }
 
-function appendTodoListItem(todoItem) {
-  const todoListArr = getTodoList();
-
-  if (todoItem) {
-    todoListArr.push(todoItem);
+function appendTodoListItem(todoItemText) {
+  if (!todoItemText) {
+    return;
   }
-
+  const todoListArr = getTodoList();
+  todoListArr.push(todoItemText);
   setTodoList(todoListArr);
-  rebuildTodoList();
+
+  const todoListItem = _getListGroupItem(todoItemText, todoListArr.length - 1);
+  todoList.appendChild(todoListItem);
 }
 
 function removeTodoListItem(idxToRemove) {
