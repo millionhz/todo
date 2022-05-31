@@ -31,6 +31,7 @@ function _getListGroupItem(todoItemText, todoItemIdx) {
     "class",
     "list-group-item d-flex justify-content-between align-items-center"
   );
+  todoItem.setAttribute("data-idx", todoItemIdx);
 
   todoItem.appendChild(textElement);
   todoItem.appendChild(buttonElement);
@@ -47,7 +48,7 @@ function rebuildTodoList() {
   }
 }
 
-function appendTodoList(todoItem) {
+function appendTodoListItem(todoItem) {
   const todoListArr = getTodoList();
 
   if (todoItem) {
@@ -58,7 +59,7 @@ function appendTodoList(todoItem) {
   rebuildTodoList();
 }
 
-function removeTodoList(idxToRemove) {
+function removeTodoListItem(idxToRemove) {
   let todoListArr = getTodoList();
 
   todoListArr.splice(idxToRemove, 1);
@@ -69,7 +70,7 @@ function removeTodoList(idxToRemove) {
 
 function _manageTodoInputEvent() {
   const todoItem = inputField.value;
-  appendTodoList(todoItem);
+  appendTodoListItem(todoItem);
 
   inputField.value = "";
 }
@@ -87,6 +88,6 @@ inputField.addEventListener("keypress", (event) => {
 
 todoList.addEventListener("click", (event) => {
   if (event.target.nodeName === "BUTTON") {
-    removeTodoList(event.target.parentElement.dataset.idx);
+    removeTodoListItem(event.target.parentElement.dataset.idx);
   }
 });
