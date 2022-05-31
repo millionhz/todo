@@ -15,22 +15,36 @@ function setTodoList(todoItems) {
   localStorage.setItem("todoList", JSON.stringify(todoItems));
 }
 
+function _getListGroupItem(todoItemText, todoItemIdx) {
+  const textElement = document.createElement("p");
+  textElement.setAttribute("class", "mx-0 my-0 text-start text-break pe-2");
+  textElement.textContent = todoItemText;
+
+  const buttonElement = document.createElement("button");
+  buttonElement.setAttribute("class", "btn btn-outline-danger btn-sm");
+  buttonElement.setAttribute("type", "button");
+  buttonElement.setAttribute("name", "delete-todo");
+  buttonElement.textContent = "Delete";
+
+  const todoItem = document.createElement("ul");
+  todoItem.setAttribute(
+    "class",
+    "list-group-item d-flex justify-content-between align-items-center"
+  );
+
+  todoItem.appendChild(textElement);
+  todoItem.appendChild(buttonElement);
+
+  return todoItem;
+}
+
 function rebuildTodoList() {
-  let todoList = getTodoList();
-  let html = "";
+  let todoListArr = getTodoList();
 
-  for (let i = 0; i < todoList.length; i++) {
-    html += `
-    <li
-    class="list-group-item d-flex justify-content-between align-items-center" data-idx= ${i} 
-  >
-    <p class="mx-0 my-0 text-start text-break pe-2">${todoList[i]}</p>
-    <button type="button" class="btn btn-outline-danger btn-sm" name="delete-todo">Delete</button>
-  </li>
-  `;
+  todoList.innerHTML = "";
+  for (let i = 0; i < todoListArr.length; i++) {
+    todoList.innerHTML += _getListGroupItem(todoListArr[i], i).outerHTML;
   }
-
-  document.querySelector("ul").innerHTML = html;
 }
 
 function appendTodoList(todoItem) {
