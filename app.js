@@ -1,9 +1,9 @@
-const addButton = document.querySelector("#add-todo-button");
-const inputField = document.querySelector("#new-todo");
-const todoList = document.querySelector("ul");
+const addButton = document.querySelector('#add-todo-button');
+const inputField = document.querySelector('#new-todo');
+const todoList = document.querySelector('ul');
 
 function getTodoList() {
-  let todoItems = localStorage.getItem("todoList");
+  let todoItems = localStorage.getItem('todoList');
 
   if (todoItems) {
     return JSON.parse(todoItems);
@@ -12,27 +12,27 @@ function getTodoList() {
 }
 
 function setTodoList(todoItems) {
-  localStorage.setItem("todoList", JSON.stringify(todoItems));
+  localStorage.setItem('todoList', JSON.stringify(todoItems));
 }
 
 function _getListGroupItem(todoItemText, todoItemIdx) {
-  const textElement = document.createElement("p");
-  textElement.setAttribute("class", "mx-0 my-0 text-start text-break pe-2");
+  const textElement = document.createElement('p');
+  textElement.setAttribute('class', 'mx-0 my-0 text-start text-break pe-2');
   textElement.textContent = todoItemText;
 
-  const buttonElement = document.createElement("button");
-  buttonElement.setAttribute("class", "btn btn-outline-danger btn-sm");
-  buttonElement.setAttribute("type", "button");
-  buttonElement.setAttribute("name", "delete-todo");
-  buttonElement.textContent = "Delete";
+  const buttonElement = document.createElement('button');
+  buttonElement.setAttribute('class', 'btn btn-outline-danger btn-sm');
+  buttonElement.setAttribute('type', 'button');
+  buttonElement.setAttribute('name', 'delete-todo');
+  buttonElement.textContent = 'Delete';
 
-  const todoItem = document.createElement("ul");
+  const todoItem = document.createElement('ul');
   todoItem.setAttribute(
-    "class",
-    "list-group-item d-flex justify-content-between align-items-center"
+    'class',
+    'list-group-item d-flex justify-content-between align-items-center'
   );
-  todoItem.setAttribute("data-idx", todoItemIdx);
-  todoItem.setAttribute("draggable", "true");
+  todoItem.setAttribute('data-idx', todoItemIdx);
+  todoItem.setAttribute('draggable', 'true');
 
   todoItem.appendChild(textElement);
   todoItem.appendChild(buttonElement);
@@ -43,7 +43,7 @@ function _getListGroupItem(todoItemText, todoItemIdx) {
 function rebuildTodoList() {
   let todoListArr = getTodoList();
 
-  todoList.innerHTML = "";
+  todoList.innerHTML = '';
   for (let i = 0; i < todoListArr.length; i++) {
     todoList.innerHTML += _getListGroupItem(todoListArr[i], i).outerHTML;
   }
@@ -85,62 +85,62 @@ function _manageTodoInputEvent() {
   const todoItem = inputField.value;
   appendTodoListItem(todoItem);
 
-  inputField.value = "";
+  inputField.value = '';
 }
 
 window.onload = () => rebuildTodoList();
 window.onfocus = () => rebuildTodoList();
 
-addButton.addEventListener("click", () => _manageTodoInputEvent());
+addButton.addEventListener('click', () => _manageTodoInputEvent());
 
-inputField.addEventListener("keypress", (event) => {
-  if (event.key === "Enter") {
+inputField.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
     _manageTodoInputEvent();
   }
 });
 
-todoList.addEventListener("click", (event) => {
-  if (event.target.nodeName === "BUTTON") {
+todoList.addEventListener('click', (event) => {
+  if (event.target.name === 'delete-todo') {
     removeTodoListItem(event.target.parentElement.dataset.idx);
   }
 });
 
-todoList.addEventListener("dragstart", (event) => {
-  if (event.target.nodeName === "UL") {
-    event.dataTransfer.setData("text/plain", event.target.dataset.idx);
-    event.target.classList.add("list-group-item-primary");
+todoList.addEventListener('dragstart', (event) => {
+  if (event.target.nodeName === 'UL') {
+    event.dataTransfer.setData('text/plain', event.target.dataset.idx);
+    event.target.classList.add('list-group-item-primary');
   }
 });
 
-todoList.addEventListener("dragend", (event) => {
-  if (event.target.nodeName === "UL") {
-    event.target.classList.remove("active");
-    event.target.classList.remove("list-group-item-primary");
+todoList.addEventListener('dragend', (event) => {
+  if (event.target.nodeName === 'UL') {
+    event.target.classList.remove('active');
+    event.target.classList.remove('list-group-item-primary');
   }
 });
 
-todoList.addEventListener("dragover", (event) => {
+todoList.addEventListener('dragover', (event) => {
   event.preventDefault();
-  event.dataTransfer.dropEffect = "move";
+  event.dataTransfer.dropEffect = 'move';
 
-  if (event.target.nodeName === "UL") {
-    event.target.classList.add("active");
+  if (event.target.nodeName === 'UL') {
+    event.target.classList.add('active');
   }
 });
 
-todoList.addEventListener("dragleave", (event) => {
-  if (event.target.nodeName === "UL") {
-    event.target.classList.remove("active");
+todoList.addEventListener('dragleave', (event) => {
+  if (event.target.nodeName === 'UL') {
+    event.target.classList.remove('active');
   }
 });
 
-todoList.addEventListener("drop", (event) => {
+todoList.addEventListener('drop', (event) => {
   event.preventDefault();
 
-  const from = event.dataTransfer.getData("text/plain");
+  const from = event.dataTransfer.getData('text/plain');
   let to = null;
 
-  if (event.target.nodeName === "UL") {
+  if (event.target.nodeName === 'UL') {
     to = event.target.dataset.idx;
   } else {
     to = event.target.parentElement.dataset.idx;
