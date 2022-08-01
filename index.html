@@ -16,17 +16,15 @@
   <body class="container text-center">
     <h1 class="col mt-2">Just Todo It</h1>
 
-    <div class="input-group mb-3">
+    <form class="input-group mb-3">
       <input
         type="text"
         class="form-control"
         placeholder="Add todo here"
-        id="new-todo"
+        name="todo"
       />
-      <button class="btn btn-success" type="button" id="add-todo-button">
-        Add
-      </button>
-    </div>
+      <input class="btn btn-success" type="submit" value="Add" />
+    </form>
 
     <div>
       <ul class="list-group"></ul>

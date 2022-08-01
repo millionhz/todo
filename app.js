@@ -1,5 +1,4 @@
-const addButton = document.querySelector('#add-todo-button');
-const inputField = document.querySelector('#new-todo');
+const inputForm = document.querySelector('form');
 const todoList = document.querySelector('ul');
 
 function getTodoList() {
@@ -44,8 +43,8 @@ function rebuildTodoList() {
   let todoListArr = getTodoList();
 
   todoList.innerHTML = '';
-  for (let i = 0; i < todoListArr.length; i++) {
-    todoList.innerHTML += _getListGroupItem(todoListArr[i], i).outerHTML;
+  for (const [idx, content] of todoListArr.entries()) {
+    todoList.appendChild(_getListGroupItem(content, idx));
   }
 }
 
@@ -82,21 +81,18 @@ function rearrangeTodoListItems(from, to) {
 }
 
 function _manageTodoInputEvent() {
-  const todoItem = inputField.value;
+  const todoItem = inputForm.todo.value;
   appendTodoListItem(todoItem);
 
-  inputField.value = '';
+  inputForm.reset();
 }
 
-window.onload = () => rebuildTodoList();
-window.onfocus = () => rebuildTodoList();
+window.onload = rebuildTodoList;
+window.onfocus = rebuildTodoList;
 
-addButton.addEventListener('click', () => _manageTodoInputEvent());
-
-inputField.addEventListener('keypress', (event) => {
-  if (event.key === 'Enter') {
-    _manageTodoInputEvent();
-  }
+inputForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  _manageTodoInputEvent();
 });
 
 todoList.addEventListener('click', (event) => {
