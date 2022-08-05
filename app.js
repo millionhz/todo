@@ -22,7 +22,7 @@ function _getListGroupItem(todoItemText, todoItemIdx) {
   const buttonElement = document.createElement('button');
   buttonElement.setAttribute('class', 'btn btn-outline-danger btn-sm');
   buttonElement.setAttribute('type', 'button');
-  buttonElement.setAttribute('name', 'delete-todo');
+  buttonElement.setAttribute('title', 'delete-todo');
   buttonElement.textContent = 'Delete';
 
   const todoItem = document.createElement('ul');
@@ -96,7 +96,7 @@ inputForm.addEventListener('submit', (event) => {
 });
 
 todoList.addEventListener('click', (event) => {
-  if (event.target.name === 'delete-todo') {
+  if (event.target.title === 'delete-todo') {
     removeTodoListItem(event.target.parentElement.dataset.idx);
   }
 });
