@@ -87,8 +87,11 @@ function _manageTodoInputEvent() {
   inputForm.reset();
 }
 
-window.onload = rebuildTodoList;
 window.onfocus = rebuildTodoList;
+
+document.addEventListener('DOMContentLoaded', () => {
+  rebuildTodoList();
+});
 
 inputForm.addEventListener('submit', (event) => {
   event.preventDefault();
