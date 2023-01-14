@@ -43,12 +43,10 @@ function handleDrop(event) {
   event.preventDefault();
 
   const from = event.dataTransfer.getData('text/plain');
-
-  if (event.target.nodeName === 'UL') {
-    to = event.target.dataset.idx;
-  } else {
-    to = event.target.parentElement.dataset.idx;
-  }
+  let to =
+    event.target.nodeName === 'UL'
+      ? event.target.dataset.idx
+      : event.target.parentElement.dataset.idx;
 
   if (from !== to) {
     rearrangeTodoListItems(from, to);
