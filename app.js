@@ -59,7 +59,7 @@ function _getListGroupItem(todoItemText, todoItemIdx) {
   textElement.textContent = todoItemText;
 
   const buttonElement = document.createElement('button');
-  buttonElement.setAttribute('class', 'btn btn-outline-danger btn-sm');
+  buttonElement.setAttribute('class', 'btn btn-danger btn-sm');
   buttonElement.setAttribute('type', 'button');
   buttonElement.addEventListener('click', handleDelete);
   buttonElement.textContent = 'Delete';
@@ -67,7 +67,7 @@ function _getListGroupItem(todoItemText, todoItemIdx) {
   const todoItem = document.createElement('ul');
   todoItem.setAttribute(
     'class',
-    'list-group-item d-flex justify-content-between align-items-center'
+    'list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-light'
   );
   todoItem.setAttribute('data-idx', todoItemIdx);
   todoItem.setAttribute('draggable', 'true');
